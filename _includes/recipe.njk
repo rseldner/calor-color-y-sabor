@@ -16,8 +16,21 @@ layout: base.njk
   <div class="detail-section">
     <h2>Ingredients</h2>
     <ul>
-      {% for item in ingredients | lines %}
-      <li>{{ item | md | safe }}</li>
+      {% for group in ingredients | ingredientGroups %}
+        {% if group.header %}
+        <li class="ingredient-group">
+          <strong>{{ group.header }}</strong>
+          <ul>
+            {% for item in group.items %}
+            <li>{{ item | md | safe }}</li>
+            {% endfor %}
+          </ul>
+        </li>
+        {% else %}
+          {% for item in group.items %}
+          <li>{{ item | md | safe }}</li>
+          {% endfor %}
+        {% endif %}
       {% endfor %}
     </ul>
   </div>

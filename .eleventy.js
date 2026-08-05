@@ -26,16 +26,41 @@ module.exports = function (eleventyConfig) {
     return str.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
   });
 
-  // Splits a plain multi-line YAML block scalar (e.g. `ingredients: |`) into
-  // an array of one item per non-blank line. Lets recipe authors paste a
-  // plain ingredient list — no dashes, no quoting needed for **bold** labels.
-  eleventyConfig.addFilter("lines", function (str) {
-    if (!str) return [];
-    if (Array.isArray(str)) return str; // backwards-compatible with old YAML lists
-    return str
-      .split("\n")
-      .map((line) => line.trim())
-      .filter((line) => line.length > 0);
+  // Turns the plain multi-line `ingredients: |` block into a list of groups:
+  // { header: "Adobo (Marinada):" | null, items: [...] }. A line that is
+  // *entirely* **bold** starts a new group and becomes its header; every
+  // other line is an ingredient in the current group. Recipes with no bold
+  // lines come back as a single group with header: null, so the ingredients
+  // render as one flat list — no template branching needed for that case.
+  // Also accepts the old dash-based YAML list for backwards compatibility.
+  eleventyConfig.addFilter("ingredientGroups", function (raw) {
+    let lines;
+    if (Array.isArray(raw)) {
+      lines = raw;
+    } else if (typeof raw === "string") {
+      lines = raw.split("\n").map((line) => line.trim()).filter(Boolean);
+    } else {
+      lines = [];
+    }
+
+    const headerPattern = /^\*\*(.+)\*\*$/;
+    const groups = [];
+    let current = { header: null, items: [] };
+
+    lines.forEach((line) => {
+      const match = headerPattern.exec(line);
+      if (match) {
+        if (current.header !== null || current.items.length > 0) {
+          groups.push(current);
+        }
+        current = { header: match[1], items: [] };
+      } else {
+        current.items.push(line);
+      }
+    });
+    groups.push(current);
+
+    return groups;
   });
 
   // Every markdown file dropped in /recipes becomes part of this collection,
