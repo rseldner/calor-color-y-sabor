@@ -17,7 +17,7 @@ layout: base.njk
     <h2>Ingredients</h2>
     <ul>
       {% for item in ingredients %}
-      <li>{{ item }}</li>
+      <li>{{ item | md | safe }}</li>
       {% endfor %}
     </ul>
   </div>

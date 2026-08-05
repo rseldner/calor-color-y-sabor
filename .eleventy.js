@@ -18,6 +18,14 @@ module.exports = function (eleventyConfig) {
     return String(num).padStart(size, "0");
   });
 
+  // Converts markdown-style **bold** to <strong>bold</strong> for strings
+  // (like frontmatter ingredient items) that never pass through Eleventy's
+  // markdown renderer. Use with `| safe` in templates.
+  eleventyConfig.addFilter("md", function (str) {
+    if (typeof str !== "string") return str;
+    return str.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  });
+
   // Every markdown file dropped in /recipes becomes part of this collection,
   // sorted alphabetically by title.
   eleventyConfig.addCollection("recipes", function (collectionApi) {
