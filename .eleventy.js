@@ -26,6 +26,18 @@ module.exports = function (eleventyConfig) {
     return str.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
   });
 
+  // Splits a plain multi-line YAML block scalar (e.g. `ingredients: |`) into
+  // an array of one item per non-blank line. Lets recipe authors paste a
+  // plain ingredient list — no dashes, no quoting needed for **bold** labels.
+  eleventyConfig.addFilter("lines", function (str) {
+    if (!str) return [];
+    if (Array.isArray(str)) return str; // backwards-compatible with old YAML lists
+    return str
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+  });
+
   // Every markdown file dropped in /recipes becomes part of this collection,
   // sorted alphabetically by title.
   eleventyConfig.addCollection("recipes", function (collectionApi) {

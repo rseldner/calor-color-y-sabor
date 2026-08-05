@@ -17,9 +17,9 @@ time: 30 min
 serves: 4
 blurb: One sentence that shows up on the card.
 tags: [weeknight, vegetarian]
-ingredients:
-  - First ingredient
-  - Second ingredient
+ingredients: |
+  First ingredient
+  Second ingredient
 permalink: "recipes/{{ title | slug }}/"
 ---
 1. First step.
@@ -29,6 +29,24 @@ permalink: "recipes/{{ title | slug }}/"
 
 The numbered list in the body becomes the "Method" section. That's the whole workflow —
 no other file needs to change.
+
+### Ingredients
+
+`ingredients` is a plain block of text — one ingredient per line, no dashes, no quoting.
+Paste a list straight from anywhere and drop it in. Use `**bold**` on a line by itself to
+group ingredients into labeled subsections:
+
+```yaml
+ingredients: |
+  **Marinade:**
+  2 tbsp soy sauce
+  1 tbsp rice vinegar
+  **For serving:**
+  Steamed rice
+  Scallions
+```
+
+Bold group labels render as `<strong>` on the recipe page.
 
 ### Adding a new category
 

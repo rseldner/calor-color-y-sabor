@@ -6,13 +6,13 @@ time: 35 min
 serves: 4
 blurb: Pan-seared thighs, a fast pan sauce, done before the rice finishes steaming.
 tags: [chicken, weeknight, one-pan]
-ingredients:
-  - 4 boneless chicken thighs
-  - 1 lemon, juiced and zested
-  - 3 cloves garlic, sliced
-  - ½ cup chicken stock
-  - 2 tbsp butter
-  - Salt, pepper, chili flake
+ingredients: |
+  4 boneless chicken thighs
+  1 lemon, juiced and zested
+  3 cloves garlic, sliced
+  ½ cup chicken stock
+  2 tbsp butter
+  Salt, pepper, chili flake
 permalink: "recipes/{{ title | slug }}/"
 ---
 1. Season thighs well, sear skin-side down 6–7 min until deep gold.

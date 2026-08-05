@@ -16,7 +16,7 @@ layout: base.njk
   <div class="detail-section">
     <h2>Ingredients</h2>
     <ul>
-      {% for item in ingredients %}
+      {% for item in ingredients | lines %}
       <li>{{ item | md | safe }}</li>
       {% endfor %}
     </ul>

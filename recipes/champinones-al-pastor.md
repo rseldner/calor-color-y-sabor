@@ -6,29 +6,29 @@ time: 45 min
 serves: 4
 blurb: Champiñones marinados en un adobo ahumado y agridulce, dorados hasta quedar crujientes — una versión vegana de los tacos al pastor.
 tags: [vegano, tacos, mexicano, sin-carne]
-ingredients:
-  - "**Champiñones:**"
-  - 1 lb (450g) de mezcla de champiñones (tipo steak blend), troceados o rebanados
-  - 1 cucharada de aceite
-  - "**Adobo (Marinada):**"
-  - 4 cucharadas de jugo de piña
-  - 1 cucharada de pasta de tomate
-  - 1 cucharada de salsa de soya
-  - 1 cucharada de vinagre de sidra de manzana
-  - 1 cucharadita de pimentón ahumado (paprika)
-  - 1 cucharadita de chile en polvo
-  - 1/2 cucharadita de comino
-  - 1/2 cucharadita de orégano
-  - 1/4 cucharadita de canela
-  - 2 dientes de ajo, picados
-  - 1 cucharadita de jarabe de arce (maple) o azúcar morena
-  - Sal y pimienta negra al gusto
-  - "**Para servir:**"
-  - Tortillas de maíz
-  - Piña picada
-  - Cebolla picada
-  - Cilantro
-  - Rodajas de limón
+ingredients: |
+  **Champiñones:**
+  1 lb (450g) de mezcla de champiñones (tipo steak blend), troceados o rebanados
+  1 cucharada de aceite
+  **Adobo (Marinada):**
+  4 cucharadas de jugo de piña
+  1 cucharada de pasta de tomate
+  1 cucharada de salsa de soya
+  1 cucharada de vinagre de sidra de manzana
+  1 cucharadita de pimentón ahumado (paprika)
+  1 cucharadita de chile en polvo
+  1/2 cucharadita de comino
+  1/2 cucharadita de orégano
+  1/4 cucharadita de canela
+  2 dientes de ajo, picados
+  1 cucharadita de jarabe de arce (maple) o azúcar morena
+  Sal y pimienta negra al gusto
+  **Para servir:**
+  Tortillas de maíz
+  Piña picada
+  Cebolla picada
+  Cilantro
+  Rodajas de limón
 permalink: "recipes/{{ title | slug }}/"
 ---
 1. Mezcle bien todos los ingredientes del adobo.
