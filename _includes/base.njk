@@ -7,14 +7,15 @@
 <meta name="description" content="{{ description or 'A drop-in recipe box: markdown in, searchable recipe cards out.' }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="{{ '/assets/style.css' | url }}">
+<link rel="icon" href="data:,">
 </head>
 <body>
 
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="site-header">
-  <a class="wordmark" href="/">Field &amp; Table — recipe index</a>
+  <a class="wordmark" href="{{ '/' | url }}">Field &amp; Table — recipe index</a>
 </header>
 
 <main id="main">
@@ -25,7 +26,8 @@
   Drop a .md file in /recipes — it shows up here. No build step to babysit.
 </footer>
 
+<script>window.SITE_PATH_PREFIX = "{{ '/' | url }}";</script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0" defer></script>
-<script src="/assets/search.js" defer></script>
+<script src="{{ '/assets/search.js' | url }}" defer></script>
 </body>
 </html>

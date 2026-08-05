@@ -25,7 +25,7 @@ pagination:
 
 <div class="grid" id="grid">
   {% for r in allRecipes %}
-  <a class="card" href="{{ r.url }}" data-title="{{ r.data.title }}" data-blurb="{{ r.data.blurb }}" data-cat="{{ r.data.category }}">
+  <a class="card" href="{{ r.url | url }}" data-title="{{ r.data.title }}" data-blurb="{{ r.data.blurb }}" data-cat="{{ r.data.category }}">
     <span class="tab tab--{{ r.data.category }}">{{ r.data.category | capitalize }}</span>
     <p class="card-index">No. {{ loop.index | padZero(3) }}</p>
     <h2>{{ r.data.title }}</h2>

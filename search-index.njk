@@ -15,7 +15,7 @@ pagination:
     "time": {{ r.data.time | dump | safe }},
     "serves": {{ r.data.serves | dump | safe }},
     "tags": {{ r.data.tags | default([]) | dump | safe }},
-    "url": {{ r.url | dump | safe }}
+    "url": {{ r.url | url | dump | safe }}
   }{% if not loop.last %},{% endif %}
 {% endfor %}
 ]

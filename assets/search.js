@@ -12,7 +12,8 @@
   let matchedUrls = null; // null = no search term active, show all (subject to category filter)
   let fuse = null;
 
-  fetch("/search-index.json")
+  const prefix = window.SITE_PATH_PREFIX || "/";
+  fetch(prefix + "search-index.json")
     .then((res) => res.json())
     .then((data) => {
       fuse = new Fuse(data, {
