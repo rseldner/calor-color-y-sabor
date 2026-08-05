@@ -32,11 +32,11 @@ ingredients: |
 permalink: "recipes/{{ title | slug }}/"
 ---
 1. Mezcle bien todos los ingredientes del adobo.
-2. Combine los champiñones con el adobo y deje reposar entre 15 y 30 minutos.
+2. Combine los champiñones con el adobo y deje reposar por 30 minutos o mas.
 3. Caliente una sartén grande a fuego medio-alto.
 4. Agregue el aceite y los champiñones.
 5. Cocine de 8 a 12 minutos, revolviendo ocasionalmente. Permita que algunas piezas se doren y se pongan crujientes.
-6. Si la sartén suelta mucho líquido, siga cocinando hasta que la humedad se evapore y los champiñones comiencen a caramelizarse.
+6. Sigue cocinando hasta que la humedad se evapore y los champiñones comiencen a caramelizarse.
 7. Caliente las tortillas.
 8. Sirva los tacos con la piña, cebolla, cilantro y un toque de limón.
 
