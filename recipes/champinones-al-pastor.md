@@ -24,7 +24,7 @@ ingredients: |
   1 cucharadita de jarabe de arce (maple) o azúcar morena
   Sal y pimienta negra al gusto
   **Para servir:**
-  Tortillas de maíz
+  Tortillas de harina o maíz
   Piña picada
   Cebolla picada
   Cilantro
