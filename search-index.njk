@@ -1,0 +1,21 @@
+---
+permalink: /search-index.json
+eleventyExcludeFromCollections: true
+pagination:
+  data: collections.recipes
+  size: 10000
+  alias: allRecipes
+---
+[
+{% for r in allRecipes %}
+  {
+    "title": {{ r.data.title | dump | safe }},
+    "category": {{ r.data.category | dump | safe }},
+    "blurb": {{ r.data.blurb | dump | safe }},
+    "time": {{ r.data.time | dump | safe }},
+    "serves": {{ r.data.serves | dump | safe }},
+    "tags": {{ r.data.tags | default([]) | dump | safe }},
+    "url": {{ r.url | dump | safe }}
+  }{% if not loop.last %},{% endif %}
+{% endfor %}
+]

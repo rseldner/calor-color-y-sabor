@@ -1,0 +1,13 @@
+{
+  "name": "recipe-box",
+  "version": "1.0.0",
+  "description": "Drop-in markdown recipes, rendered as a searchable recipe box.",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "debug": "DEBUG=Eleventy* eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1"
+  }
+}

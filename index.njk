@@ -1,0 +1,37 @@
+---
+layout: base.njk
+title: Recipe Box
+pagination:
+  data: collections.recipes
+  size: 10000
+  alias: allRecipes
+---
+<section class="hero">
+  <h1>What's for<br><em>dinner</em>, exactly.</h1>
+  <div class="search-wrap">
+    <label class="search-label" for="q">Search the box</label>
+    <div class="search-box">
+      <input id="q" type="text" placeholder='try &quot;lentil&quot; or &quot;weeknight&quot;' autocomplete="off">
+    </div>
+  </div>
+</section>
+
+<div class="filters" id="filters">
+  <button class="chip active" data-cat="all">All {{ allRecipes.length }}</button>
+  {% for cat in allRecipes | uniqueCategories %}
+    <button class="chip" data-cat="{{ cat }}">{{ cat | capitalize }}</button>
+  {% endfor %}
+</div>
+
+<div class="grid" id="grid">
+  {% for r in allRecipes %}
+  <a class="card" href="{{ r.url }}" data-title="{{ r.data.title }}" data-blurb="{{ r.data.blurb }}" data-cat="{{ r.data.category }}">
+    <span class="tab tab--{{ r.data.category }}">{{ r.data.category | capitalize }}</span>
+    <p class="card-index">No. {{ loop.index | padZero(3) }}</p>
+    <h2>{{ r.data.title }}</h2>
+    <p>{{ r.data.blurb }}</p>
+    <div class="card-meta"><span>{{ r.data.time }}</span><span>Serves {{ r.data.serves }}</span></div>
+  </a>
+  {% endfor %}
+</div>
+<p class="empty-note" id="emptyNote" hidden>Nothing in the box matches that yet.</p>

@@ -1,0 +1,35 @@
+---
+layout: base.njk
+---
+<article class="recipe-page">
+  <a class="back-link" href="/">← Back to the box</a>
+
+  <span class="tab tab--{{ category }} tab--static">{{ category | capitalize }}</span>
+  <h1>{{ title }}</h1>
+  <div class="card-meta card-meta--detail">
+    <span>{{ time }}</span>
+    <span>Serves {{ serves }}</span>
+  </div>
+
+  {% if blurb %}<p class="blurb">{{ blurb }}</p>{% endif %}
+
+  <div class="detail-section">
+    <h2>Ingredients</h2>
+    <ul>
+      {% for item in ingredients %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="detail-section">
+    <h2>Method</h2>
+    {{ content | safe }}
+  </div>
+
+  {% if tags and tags.length %}
+  <div class="tag-row">
+    {% for t in tags %}<span class="tag">#{{ t }}</span>{% endfor %}
+  </div>
+  {% endif %}
+</article>
