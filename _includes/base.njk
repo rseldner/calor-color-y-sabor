@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ title or "Field & Table" }}{% if title %} — Field & Table{% endif %}</title>
-<meta name="description" content="{{ description or 'A drop-in recipe box: markdown in, searchable recipe cards out.' }}">
+<title>{{ title or "Color, Calor, Y Sabor" }}{% if title %} — Color, Calor, Y Sabor{% endif %}</title>
+<meta name="description" content="{{ description or 'A drop-in recipe box built on color, calor y sabor — markdown in, searchable recipe cards out.' }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ '/assets/style.css' | url }}">
 <link rel="icon" href="data:,">
 </head>
@@ -14,8 +14,10 @@
 
 <a class="skip-link" href="#main">Skip to content</a>
 
+<div class="picado-strip" aria-hidden="true"></div>
+
 <header class="site-header">
-  <a class="wordmark" href="{{ '/' | url }}">Field &amp; Table — recipe index</a>
+  <a class="wordmark" href="{{ '/' | url }}">Color, Calor, Y Sabor <span class="wordmark-sub">— recipe index</span></a>
 </header>
 
 <main id="main">
@@ -23,7 +25,7 @@
 </main>
 
 <footer class="site-footer">
-  Drop a .md file in /recipes — it shows up here. No build step to babysit.
+  Drop a .md file in /recipes — it shows up here, color and all.
 </footer>
 
 <script>window.SITE_PATH_PREFIX = "{{ '/' | url }}";</script>
