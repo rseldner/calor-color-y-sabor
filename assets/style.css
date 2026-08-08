@@ -139,6 +139,7 @@ a{color:inherit; text-decoration:none;}
   transition:transform .18s ease, box-shadow .18s ease;
   box-shadow:2px 2px 0 rgba(43,26,18,0.15);
 }
+.card[hidden]{display:none;}
 .card:hover, .card:focus-visible{
   transform:translate(-2px,-3px);
   box-shadow:6px 8px 0 rgba(43,26,18,0.18);
