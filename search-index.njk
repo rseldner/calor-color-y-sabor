@@ -10,7 +10,7 @@ pagination:
 {% for r in allRecipes %}
   {
     "title": {{ r.data.title | dump | safe }},
-    "category": {{ r.data.category | dump | safe }},
+    "category": {{ r.data.category | categoryList | dump | safe }},
     "blurb": {{ r.data.blurb | dump | safe }},
     "time": {{ r.data.time | dump | safe }},
     "serves": {{ r.data.serves | dump | safe }},

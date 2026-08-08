@@ -12,10 +12,24 @@ module.exports = function (eleventyConfig) {
   // Used in frontmatter permalinks: "recipes/{{ title | slug }}/"
   eleventyConfig.addFilter("slug", slugify);
 
+  // Normalizes a recipe's `category` frontmatter into an array, whether it
+  // was written as a single string (category: mains) or a list
+  // (category: [mains, sides]). Every place that reads category should go
+  // through this filter so both forms keep working everywhere — tabs,
+  // homepage filtering, search, and the "pairs well with" dot color.
+  eleventyConfig.addFilter("categoryList", function (category) {
+    if (Array.isArray(category)) return category.filter(Boolean);
+    if (category) return [category];
+    return [];
+  });
+
   // Returns the distinct set of categories present in a list of recipes,
   // used to build the filter row on the homepage without hardcoding categories.
   eleventyConfig.addFilter("uniqueCategories", function (recipes) {
-    return [...new Set(recipes.map((r) => r.data.category))];
+    const all = recipes.flatMap((r) =>
+      Array.isArray(r.data.category) ? r.data.category : [r.data.category]
+    );
+    return [...new Set(all.filter(Boolean))];
   });
 
   // Zero-pads the "No. 004" style index numbers on recipe cards.

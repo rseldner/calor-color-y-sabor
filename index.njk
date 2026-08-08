@@ -26,8 +26,12 @@ pagination:
 
 <div class="grid" id="grid">
   {% for r in allRecipes %}
-  <a class="card" href="{{ r.url | url }}" data-title="{{ r.data.title }}" data-blurb="{{ r.data.blurb }}" data-cat="{{ r.data.category }}">
-    <span class="tab tab--{{ r.data.category }}">{{ r.data.category | capitalize }}</span>
+  <a class="card" href="{{ r.url | url }}" data-title="{{ r.data.title }}" data-blurb="{{ r.data.blurb }}" data-cat="{{ r.data.category | categoryList | join(' ') }}">
+    <div class="tab-row">
+      {% for cat in r.data.category | categoryList %}
+      <span class="tab tab--{{ cat }}">{{ cat | capitalize }}</span>
+      {% endfor %}
+    </div>
     <p class="card-index">No. {{ loop.index | padZero(3) }}</p>
     <h2>{{ r.data.title }}</h2>
     <p>{{ r.data.blurb }}</p>

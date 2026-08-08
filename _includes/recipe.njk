@@ -4,7 +4,11 @@ layout: base.njk
 <article class="recipe-page">
   <a class="back-link" href="{{ '/' | url }}">← Back to the box</a>
 
-  <span class="tab tab--{{ category }} tab--static">{{ category | capitalize }}</span>
+  <div class="tab-row tab-row--static">
+    {% for cat in category | categoryList %}
+    <span class="tab tab--{{ cat }}">{{ cat | capitalize }}</span>
+    {% endfor %}
+  </div>
   <h1>{{ title }}</h1>
   <div class="card-meta card-meta--detail">
     <span>{{ time }}</span>
@@ -47,7 +51,7 @@ layout: base.njk
     <div class="related-grid">
       {% for item in relatedItems %}
       <a class="related-card" href="{{ item.url | url }}">
-        <span class="related-dot related-dot--{{ item.data.category }}"></span>
+        <span class="related-dot related-dot--{{ (item.data.category | categoryList)[0] }}"></span>
         {{ item.data.title }}
       </a>
       {% endfor %}

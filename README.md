@@ -76,6 +76,24 @@ automatically. To give a new category its own tab color, add a rule to `assets/s
 
 If you skip this, new categories fall back to a neutral tab color.
 
+A recipe can also belong to more than one category — use a list instead of a single value:
+
+```yaml
+category: [mains, sides]
+```
+
+It'll get a tab for each category, show up under both filters on the homepage, and match
+both in search. Everything (tabs, filtering, search) also still works with a single plain
+string like `category: mains`, so existing recipes don't need to change.
+
+### Building a recipe with the form
+
+Instead of hand-writing frontmatter, open `/tools/recipe-form.html` (linked from the "+ New
+recipe" button on the homepage). It's a plain HTML form — fill in the fields and it builds
+the `.md` file for you in a live preview, with three ways to get it into `/recipes`:
+download it, copy it to your clipboard, or click "Create on GitHub" to open a prefilled
+new-file page on GitHub (you still review and commit there yourself).
+
 ## Local development
 
 ```bash
@@ -113,6 +131,8 @@ search-index.njk            ← generates /search-index.json at build time
 assets/
   style.css                 ← all styling
   search.js                  ← client-side search/filter logic
+tools/recipe-form.html          ← GUI for building a recipe .md file
 utils/slugify.js              ← turns a title into a URL-safe slug
+.eleventy.js                    ← config: collections and template filters
 .github/workflows/deploy.yml   ← builds + publishes to GitHub Pages on push
 ```

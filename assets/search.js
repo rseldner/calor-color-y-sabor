@@ -30,7 +30,8 @@
     let visibleCount = 0;
 
     cards.forEach((card) => {
-      const inCategory = activeCat === "all" || card.dataset.cat === activeCat;
+      const inCategory =
+        activeCat === "all" || card.dataset.cat.split(" ").includes(activeCat);
       const inSearch = matchedUrls === null || matchedUrls.has(new URL(card.href).pathname);
       const visible = inCategory && inSearch;
       card.hidden = !visible;
