@@ -1,6 +1,6 @@
 ---
 layout: recipe.njk
-title: SALSA DE PIÑA
+title: Salsa de Piña
 category: sides
 time: 15 min
 serves: 
