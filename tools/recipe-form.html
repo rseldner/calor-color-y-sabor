@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recipe Box — New Recipe</title>
+<style>
+  :root{
+    --paper: #fbf0dd;
+    --paper-raised: #fff8ec;
+    --ink: #2b1a12;
+    --ink-soft: #7a5c46;
+    --line: #ecc98e;
+    --tab-sage: #0f9b8e;
+    --tab-mustard: #f2a900;
+    --tab-rust: #e2472a;
+    --tab-slate: #d94190;
+    --accent: #e2472a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'IBM Plex Mono', 'Courier New', monospace;
+    min-height:100vh; padding:32px 20px 80px;
+  }
+  h1{font-family:Georgia, serif; font-size:28px; margin:0 0 4px;}
+  .sub{color:var(--ink-soft); font-size:12px; margin:0 0 28px;}
+  .wrap{max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  @media (max-width:900px){ .wrap{grid-template-columns:1fr;} }
+  .panel{
+    background:var(--paper-raised); border:1px solid var(--ink);
+    box-shadow:3px 3px 0 rgba(43,26,18,0.15);
+    padding:20px 20px 24px;
+  }
+  .panel h2{
+    font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--tab-rust); margin:0 0 16px; font-weight:600;
+  }
+  label{display:block; font-size:11px; letter-spacing:0.04em; color:var(--ink-soft); margin:14px 0 4px;}
+  label:first-child{margin-top:0;}
+  input[type=text], input[type=number], textarea, select{
+    width:100%; font-family:inherit; font-size:13.5px; color:var(--ink);
+    background:#fff; border:1px solid var(--line); padding:8px 9px;
+  }
+  input:focus, textarea:focus, select:focus{outline:2px solid var(--ink); outline-offset:1px;}
+  textarea{resize:vertical; min-height:44px;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .hint{font-size:10.5px; color:var(--ink-soft); margin-top:4px;}
+  .other-cat{margin-top:8px;}
+
+  .tag-input-wrap{
+    display:flex; flex-wrap:wrap; gap:6px; align-items:center;
+    border:1px solid var(--line); background:#fff; padding:6px;
+  }
+  .tag-chip{
+    background:var(--ink); color:var(--paper); font-size:11px;
+    padding:4px 8px; display:flex; align-items:center; gap:6px;
+  }
+  .tag-chip button{background:none; border:none; color:var(--paper); cursor:pointer; font-size:12px; padding:0;}
+  .tag-input-wrap input{border:none; flex:1; min-width:100px; padding:4px;}
+
+  .dyn-row{
+    display:flex; gap:8px; align-items:flex-start; margin-bottom:8px;
+    border:1px dashed var(--line); padding:8px; background:#fff;
+  }
+  .dyn-row.is-header{background:#fff4de; border-style:solid;}
+  .dyn-row textarea, .dyn-row input{flex:1;}
+  .dyn-row .controls{display:flex; flex-direction:column; gap:3px;}
+  .dyn-row .controls button{
+    font-size:10px; padding:2px 6px; cursor:pointer; background:var(--paper-raised);
+    border:1px solid var(--line); color:var(--ink-soft);
+  }
+  .dyn-row .controls button:hover{border-color:var(--ink); color:var(--ink);}
+  .step-num{
+    font-size:11px; color:var(--ink-soft); width:20px; padding-top:9px; flex:none;
+  }
+
+  .add-btn{
+    font-size:11px; letter-spacing:0.04em; padding:7px 12px; margin-top:2px; margin-right:6px;
+    background:var(--paper-raised); border:1px solid var(--ink); color:var(--ink); cursor:pointer;
+  }
+  .add-btn:hover{background:var(--ink); color:var(--paper);}
+  .toggle-row{display:flex; align-items:center; gap:8px; margin:14px 0 6px;}
+  .toggle-row input{width:auto;}
+
+  .preview-panel{position:sticky; top:20px; align-self:start;}
+  pre#preview{
+    background:#1f140d; color:#f3e6d3; font-size:12px; line-height:1.6;
+    padding:16px; overflow:auto; max-height:560px; margin:0; white-space:pre-wrap; word-break:break-word;
+  }
+  .actions{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;}
+  .actions button{
+    font-size:12px; letter-spacing:0.05em; padding:10px 16px; cursor:pointer;
+    border:1px solid var(--ink); background:var(--ink); color:var(--paper);
+  }
+  .actions button.secondary{background:var(--paper-raised); color:var(--ink);}
+  .actions button:disabled{opacity:0.4; cursor:not-allowed;}
+  .filename{font-size:11px; color:var(--ink-soft); margin-top:10px;}
+  .filename code{background:#fff; padding:2px 5px; border:1px solid var(--line);}
+  .status{font-size:11px; margin-top:8px; min-height:14px;}
+  .status.ok{color:var(--tab-sage);}
+  .status.err{color:var(--tab-rust);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <h1>New Recipe</h1>
+    <p class="sub">Fills out recipes/&lt;slug&gt;.md for calor-color-y-sabor — no hand-written frontmatter.</p>
+
+    <div class="panel">
+      <h2>Basics</h2>
+      <label for="title">Title</label>
+      <input type="text" id="title" placeholder="Weeknight Lemon Chicken">
+
+      <div class="row2">
+        <div>
+          <label for="category">Category</label>
+          <select id="category">
+            <option value="mains">mains</option>
+            <option value="baking">baking</option>
+            <option value="sides">sides</option>
+            <option value="soups">soups</option>
+            <option value="__other">other…</option>
+          </select>
+          <input type="text" id="categoryOther" class="other-cat" placeholder="custom category" style="display:none;">
+        </div>
+        <div>
+          <label for="time">Time</label>
+          <input type="text" id="time" placeholder="35 min">
+        </div>
+      </div>
+
+      <div class="row2">
+        <div>
+          <label for="serves">Serves</label>
+          <input type="number" id="serves" min="1" placeholder="4">
+        </div>
+        <div>
+          <label for="tagInput">Tags</label>
+          <div class="tag-input-wrap" id="tagWrap">
+            <input type="text" id="tagInput" placeholder="type a tag, press Enter">
+          </div>
+        </div>
+      </div>
+
+      <label for="blurb">Blurb</label>
+      <textarea id="blurb" placeholder="One or two sentences that sell the dish."></textarea>
+      <div class="hint">Shows on the card and under the recipe title.</div>
+    </div>
+
+    <div class="panel" style="margin-top:20px;">
+      <h2>Ingredients</h2>
+      <div id="ingredientRows"></div>
+      <button class="add-btn" id="addIngredient" type="button">+ Ingredient</button>
+      <button class="add-btn" id="addGroupHeader" type="button">+ Group header</button>
+      <div class="hint">Use a group header (e.g. "Adobo") to split ingredients into labeled sections, like the al pastor recipe.</div>
+    </div>
+
+    <div class="panel" style="margin-top:20px;">
+      <h2>Method</h2>
+      <div id="stepRows"></div>
+      <button class="add-btn" id="addStep" type="button">+ Step</button>
+    </div>
+
+    <div class="panel" style="margin-top:20px;">
+      <div class="toggle-row">
+        <input type="checkbox" id="tipsToggle">
+        <label for="tipsToggle" style="margin:0;">Add a chef's tips section</label>
+      </div>
+      <div id="tipsSection" style="display:none;">
+        <label for="tipsHeading">Heading</label>
+        <input type="text" id="tipsHeading" value="Chef's tips">
+        <div id="tipRows" style="margin-top:10px;"></div>
+        <button class="add-btn" id="addTip" type="button">+ Tip</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-panel">
+    <div class="panel">
+      <h2>Preview — recipes/<span id="slugPreview">untitled</span>.md</h2>
+      <pre id="preview"></pre>
+      <div class="filename">Will download as <code><span id="filenamePreview">untitled.md</span></code></div>
+      <div class="actions">
+        <button id="downloadBtn" type="button">Download .md</button>
+        <button id="copyBtn" type="button" class="secondary">Copy to clipboard</button>
+      </div>
+      <div class="status" id="status"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------- state ----------
+let ingredients = [];   // {type:'item'|'header', text}
+let steps = [];         // strings
+let tips = [];          // strings
+let tags = [];
+
+// ---------- helpers ----------
+function slugify(str){
+  return String(str || '')
+    .toLowerCase().trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function yamlScalar(str){
+  str = String(str || '');
+  const needsQuote = /[:#\[\]{}&*!|>'"%@`]/.test(str) || /^[\s\-?]/.test(str) || str.includes('\n');
+  if (needsQuote){
+    return '"' + str.replace(/\\/g,'\\\\').replace(/"/g,'\\"') + '"';
+  }
+  return str;
+}
+
+function el(tag, attrs, children){
+  const e = document.createElement(tag);
+  Object.entries(attrs || {}).forEach(([k,v]) => {
+    if (k === 'class') e.className = v;
+    else if (k in e) e[k] = v;
+    else e.setAttribute(k, v);
+  });
+  (children || []).forEach(c => e.appendChild(c));
+  return e;
+}
+
+function moveItem(arr, i, dir){
+  const j = i + dir;
+  if (j < 0 || j >= arr.length) return;
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+}
+
+// ---------- ingredients UI ----------
+const ingredientRows = document.getElementById('ingredientRows');
+function renderIngredients(){
+  ingredientRows.innerHTML = '';
+  ingredients.forEach((row, i) => {
+    const isHeader = row.type === 'header';
+    const input = isHeader
+      ? el('input', {type:'text', value: row.text, placeholder:'Section name, e.g. Adobo'})
+      : el('textarea', {value: row.text, placeholder:'1 lemon, juiced and zested', rows:1});
+    input.addEventListener('input', e => { row.text = e.target.value; renderPreview(); });
+
+    const up = el('button', {type:'button', textContent:'↑'});
+    up.onclick = () => { moveItem(ingredients, i, -1); renderIngredients(); renderPreview(); };
+    const down = el('button', {type:'button', textContent:'↓'});
+    down.onclick = () => { moveItem(ingredients, i, 1); renderIngredients(); renderPreview(); };
+    const del = el('button', {type:'button', textContent:'✕'});
+    del.onclick = () => { ingredients.splice(i,1); renderIngredients(); renderPreview(); };
+
+    const wrapDiv = el('div', {class:'dyn-row' + (isHeader ? ' is-header' : '')}, [
+      input,
+      el('div', {class:'controls'}, [up, down, del])
+    ]);
+    ingredientRows.appendChild(wrapDiv);
+  });
+}
+document.getElementById('addIngredient').onclick = () => { ingredients.push({type:'item', text:''}); renderIngredients(); renderPreview(); };
+document.getElementById('addGroupHeader').onclick = () => { ingredients.push({type:'header', text:''}); renderIngredients(); renderPreview(); };
+
+// ---------- steps UI ----------
+const stepRows = document.getElementById('stepRows');
+function renderSteps(){
+  stepRows.innerHTML = '';
+  steps.forEach((text, i) => {
+    const ta = el('textarea', {value: text, placeholder:'Sear thighs skin-side down 6-7 min.', rows:1});
+    ta.addEventListener('input', e => { steps[i] = e.target.value; renderPreview(); });
+
+    const up = el('button', {type:'button', textContent:'↑'});
+    up.onclick = () => { moveItem(steps, i, -1); renderSteps(); renderPreview(); };
+    const down = el('button', {type:'button', textContent:'↓'});
+    down.onclick = () => { moveItem(steps, i, 1); renderSteps(); renderPreview(); };
+    const del = el('button', {type:'button', textContent:'✕'});
+    del.onclick = () => { steps.splice(i,1); renderSteps(); renderPreview(); };
+
+    const row = el('div', {class:'dyn-row'}, [
+      el('span', {class:'step-num', textContent: (i+1) + '.'}),
+      ta,
+      el('div', {class:'controls'}, [up, down, del])
+    ]);
+    stepRows.appendChild(row);
+  });
+}
+document.getElementById('addStep').onclick = () => { steps.push(''); renderSteps(); renderPreview(); };
+
+// ---------- tips UI ----------
+const tipRows = document.getElementById('tipRows');
+function renderTips(){
+  tipRows.innerHTML = '';
+  tips.forEach((text, i) => {
+    const ta = el('textarea', {value: text, placeholder:'Do not crowd the pan.', rows:1});
+    ta.addEventListener('input', e => { tips[i] = e.target.value; renderPreview(); });
+    const del = el('button', {type:'button', textContent:'✕'});
+    del.onclick = () => { tips.splice(i,1); renderTips(); renderPreview(); };
+    const row = el('div', {class:'dyn-row'}, [ta, el('div', {class:'controls'}, [del])]);
+    tipRows.appendChild(row);
+  });
+}
+document.getElementById('addTip').onclick = () => { tips.push(''); renderTips(); renderPreview(); };
+document.getElementById('tipsToggle').addEventListener('change', e => {
+  document.getElementById('tipsSection').style.display = e.target.checked ? 'block' : 'none';
+  renderPreview();
+});
+
+// ---------- tags UI ----------
+const tagWrap = document.getElementById('tagWrap');
+const tagInput = document.getElementById('tagInput');
+function renderTags(){
+  tagWrap.querySelectorAll('.tag-chip').forEach(c => c.remove());
+  tags.forEach((t, i) => {
+    const btn = el('button', {type:'button', textContent:'✕'});
+    btn.onclick = () => { tags.splice(i,1); renderTags(); renderPreview(); };
+    const chip = el('span', {class:'tag-chip'}, [document.createTextNode(t), btn]);
+    tagWrap.insertBefore(chip, tagInput);
+  });
+}
+tagInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ','){
+    e.preventDefault();
+    const v = slugify(tagInput.value).trim();
+    if (v && !tags.includes(v)) tags.push(v);
+    tagInput.value = '';
+    renderTags(); renderPreview();
+  } else if (e.key === 'Backspace' && !tagInput.value && tags.length){
+    tags.pop(); renderTags(); renderPreview();
+  }
+});
+
+// ---------- category other toggle ----------
+const categorySelect = document.getElementById('category');
+const categoryOther = document.getElementById('categoryOther');
+categorySelect.addEventListener('change', () => {
+  categoryOther.style.display = categorySelect.value === '__other' ? 'block' : 'none';
+  renderPreview();
+});
+categoryOther.addEventListener('input', renderPreview);
+
+// ---------- build markdown ----------
+function buildContent(){
+  const title = document.getElementById('title').value.trim();
+  const category = categorySelect.value === '__other' ? categoryOther.value.trim() : categorySelect.value;
+  const time = document.getElementById('time').value.trim();
+  const serves = document.getElementById('serves').value.trim();
+  const blurb = document.getElementById('blurb').value.trim();
+
+  const ingredientLines = ingredients
+    .filter(r => r.text.trim())
+    .map(r => r.type === 'header' ? `**${r.text.trim()}**` : r.text.trim());
+
+  const stepLines = steps
+    .map(s => s.trim())
+    .filter(Boolean)
+    .map((s, i) => `${i+1}. ${s}`);
+
+  const tipsHeading = document.getElementById('tipsHeading').value.trim() || "Chef's tips";
+  const tipLines = tips.map(t => t.trim()).filter(Boolean).map(t => `- ${t}`);
+  const includeTips = document.getElementById('tipsToggle').checked && tipLines.length;
+
+  let fm = '---\n';
+  fm += 'layout: recipe.njk\n';
+  fm += `title: ${yamlScalar(title)}\n`;
+  fm += `category: ${category || 'mains'}\n`;
+  fm += `time: ${yamlScalar(time)}\n`;
+  fm += `serves: ${serves || ''}\n`;
+  fm += `blurb: ${yamlScalar(blurb)}\n`;
+  fm += `tags: [${tags.join(', ')}]\n`;
+  fm += 'ingredients: |\n';
+  fm += ingredientLines.map(l => '  ' + l).join('\n') + '\n';
+  fm += 'permalink: "recipes/{{ title | slug }}/"\n';
+  fm += '---\n';
+
+  let body = stepLines.join('\n');
+  if (includeTips){
+    body += `\n\n**${tipsHeading}**\n\n` + tipLines.join('\n');
+  }
+  body += '\n';
+
+  return { text: fm + body, slug: slugify(title) || 'untitled', title, ingredientLines, stepLines };
+}
+
+function renderPreview(){
+  const { text, slug, title, ingredientLines, stepLines } = buildContent();
+  document.getElementById('preview').textContent = text;
+  document.getElementById('slugPreview').textContent = slug;
+  document.getElementById('filenamePreview').textContent = slug + '.md';
+
+  const ready = title.length > 0 && ingredientLines.length > 0 && stepLines.length > 0;
+  document.getElementById('downloadBtn').disabled = !ready;
+  document.getElementById('copyBtn').disabled = !ready;
+}
+
+document.getElementById('title').addEventListener('input', renderPreview);
+['time','serves','blurb'].forEach(id => document.getElementById(id).addEventListener('input', renderPreview));
+
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  const { text, slug } = buildContent();
+  const blob = new Blob([text], {type:'text/markdown'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = slug + '.md';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  showStatus('Downloaded ' + slug + '.md — drop it in recipes/.', 'ok');
+});
+
+document.getElementById('copyBtn').addEventListener('click', async () => {
+  const { text } = buildContent();
+  try{
+    await navigator.clipboard.writeText(text);
+    showStatus('Copied to clipboard.', 'ok');
+  }catch(err){
+    showStatus('Copy failed — select the preview text manually.', 'err');
+  }
+});
+
+function showStatus(msg, cls){
+  const s = document.getElementById('status');
+  s.textContent = msg; s.className = 'status ' + cls;
+  setTimeout(() => { s.textContent = ''; }, 3500);
+}
+
+// ---------- seed with one starter row each ----------
+ingredients.push({type:'item', text:''});
+steps.push('');
+renderIngredients();
+renderSteps();
+renderTips();
+renderTags();
+renderPreview();
+</script>
+</body>
+</html>

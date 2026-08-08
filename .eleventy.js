@@ -4,6 +4,11 @@ module.exports = function (eleventyConfig) {
   // Static assets (css/js/fonts) copied as-is to the output site
   eleventyConfig.addPassthroughCopy("assets");
 
+  // Standalone tools (e.g. the recipe input form) copied as-is — these are
+  // plain static HTML files and must NOT be run through the njk template
+  // engine, since they use their own {{ }} / template-literal syntax.
+  eleventyConfig.addPassthroughCopy("tools");
+
   // Used in frontmatter permalinks: "recipes/{{ title | slug }}/"
   eleventyConfig.addFilter("slug", slugify);
 

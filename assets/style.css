@@ -93,6 +93,11 @@ a{color:inherit; text-decoration:none;}
   font-style:italic; font-weight:500; color:var(--accent);
 }
 .search-wrap{flex:0 0 auto; min-width:260px;}
+.new-recipe-link{
+  display:inline-block; margin-top:10px;
+  background:var(--paper-raised); border-color:var(--ink); color:var(--ink);
+}
+.new-recipe-link:hover{background:var(--ink); color:var(--paper);}
 .search-label{
   font-family:'IBM Plex Mono', monospace;
   font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
