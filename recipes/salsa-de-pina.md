@@ -6,6 +6,7 @@ time: 15 min
 serves: 
 blurb: El acompañamiento perfecto para los champiñones al pastor.
 tags: []
+related: [champinones-al-pastor]
 ingredients: |
   1 taza de piña en cubitos
   1/4 de taza de cebolla roja picada

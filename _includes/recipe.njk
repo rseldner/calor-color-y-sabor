@@ -40,6 +40,21 @@ layout: base.njk
     {{ content | safe }}
   </div>
 
+  {% set relatedItems = related | resolveRelated(collections.recipes) %}
+  {% if relatedItems.length %}
+  <div class="detail-section related-section">
+    <h2>Pairs well with</h2>
+    <div class="related-grid">
+      {% for item in relatedItems %}
+      <a class="related-card" href="{{ item.url | url }}">
+        <span class="related-dot related-dot--{{ item.data.category }}"></span>
+        {{ item.data.title }}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
   {% if tags and tags.length %}
   <div class="tag-row">
     {% for t in tags %}<span class="tag">#{{ t }}</span>{% endfor %}

@@ -147,6 +147,12 @@
       <label for="blurb">Blurb</label>
       <textarea id="blurb" placeholder="One or two sentences that sell the dish."></textarea>
       <div class="hint">Shows on the card and under the recipe title.</div>
+
+      <label for="relatedInput">Pairs well with (optional)</label>
+      <div class="tag-input-wrap" id="relatedWrap">
+        <input type="text" id="relatedInput" placeholder="filename of another recipe, press Enter">
+      </div>
+      <div class="hint">Use the other recipe's filename without <code>.md</code> — e.g. <code>salsa-de-pina</code> for recipes/salsa-de-pina.md, not its title. Add the reverse entry on that recipe too if the pairing goes both ways.</div>
     </div>
 
     <div class="panel" style="margin-top:20px;">
@@ -199,6 +205,7 @@ let ingredients = [];   // {type:'item'|'header', text}
 let steps = [];         // strings
 let tips = [];          // strings
 let tags = [];
+let related = [];       // filenames (no .md) of other recipes this one pairs with
 
 // ---------- helpers ----------
 function slugify(str){
@@ -331,6 +338,30 @@ tagInput.addEventListener('keydown', e => {
   }
 });
 
+// ---------- related recipes UI ----------
+const relatedWrap = document.getElementById('relatedWrap');
+const relatedInput = document.getElementById('relatedInput');
+function renderRelated(){
+  relatedWrap.querySelectorAll('.tag-chip').forEach(c => c.remove());
+  related.forEach((t, i) => {
+    const btn = el('button', {type:'button', textContent:'✕'});
+    btn.onclick = () => { related.splice(i,1); renderRelated(); renderPreview(); };
+    const chip = el('span', {class:'tag-chip'}, [document.createTextNode(t), btn]);
+    relatedWrap.insertBefore(chip, relatedInput);
+  });
+}
+relatedInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ','){
+    e.preventDefault();
+    const v = slugify(relatedInput.value).trim();
+    if (v && !related.includes(v)) related.push(v);
+    relatedInput.value = '';
+    renderRelated(); renderPreview();
+  } else if (e.key === 'Backspace' && !relatedInput.value && related.length){
+    related.pop(); renderRelated(); renderPreview();
+  }
+});
+
 // ---------- category other toggle ----------
 const categorySelect = document.getElementById('category');
 const categoryOther = document.getElementById('categoryOther');
@@ -369,6 +400,7 @@ function buildContent(){
   fm += `serves: ${serves || ''}\n`;
   fm += `blurb: ${yamlScalar(blurb)}\n`;
   fm += `tags: [${tags.join(', ')}]\n`;
+  if (related.length) fm += `related: [${related.join(', ')}]\n`;
   fm += 'ingredients: |\n';
   fm += ingredientLines.map(l => '  ' + l).join('\n') + '\n';
   fm += 'permalink: "recipes/{{ title | slug }}/"\n';
@@ -454,6 +486,7 @@ renderIngredients();
 renderSteps();
 renderTips();
 renderTags();
+renderRelated();
 renderPreview();
 </script>
 </body>

@@ -76,6 +76,20 @@ module.exports = function (eleventyConfig) {
       .sort((a, b) => a.data.title.localeCompare(b.data.title));
   });
 
+  // Resolves a recipe's `related: [some-file-slug, ...]` frontmatter into the
+  // full recipe objects (title, url, category, etc.) used to render "Pairs
+  // well with" links. Matches on filename (Eleventy's `fileSlug`, e.g.
+  // "salsa-de-pina" for recipes/salsa-de-pina.md) rather than the title-based
+  // permalink slug, since fileSlug is stable even if a title changes or
+  // contains characters the URL slugifier strips. Unknown/typo'd slugs are
+  // silently dropped instead of breaking the build.
+  eleventyConfig.addFilter("resolveRelated", function (relatedSlugs, allRecipes) {
+    if (!Array.isArray(relatedSlugs) || !Array.isArray(allRecipes)) return [];
+    return relatedSlugs
+      .map((slug) => allRecipes.find((r) => r.fileSlug === slug))
+      .filter(Boolean);
+  });
+
   // Build-time JSON search index consumed by assets/search.js in the browser.
   // (Generated from _includes/search-index.njk — see that file.)
 

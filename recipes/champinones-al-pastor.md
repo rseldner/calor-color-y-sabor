@@ -6,6 +6,7 @@ time: 45 min
 serves: 4
 blurb: Champiñones marinados en un adobo ahumado y agridulce, dorados hasta quedar crujientes — una versión vegana de los tacos al pastor.
 tags: [vegano, tacos, mexicano, sin-carne]
+related: [salsa-de-pina]
 ingredients: |
   **Champiñones:**
   1 lb (450g) de mezcla de champiñones (tipo steak blend), troceados o rebanados

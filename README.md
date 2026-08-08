@@ -48,6 +48,23 @@ ingredients: |
 
 Bold group labels render as `<strong>` on the recipe page.
 
+### Linking recipes
+
+Add a `related:` list to point to other recipes that pair well with this one —
+it renders as a "Pairs well with" row of links on the recipe page:
+
+```yaml
+related: [salsa-de-pina]
+```
+
+Each entry is the *filename* of the target recipe without `.md` (not the title,
+and not the URL slug — those can differ if the title has accents or punctuation
+the URL slugifier strips). So `recipes/salsa-de-pina.md` is referenced as
+`salsa-de-pina`, no matter what its title or permalink end up being. Links
+aren't automatically two-way — add the reverse entry on the other recipe too
+if the pairing goes both ways. Unknown filenames are dropped silently at build
+time rather than breaking the site.
+
 ### Adding a new category
 
 Categories aren't hardcoded. Use any value for `category` and it'll show up as a filter
