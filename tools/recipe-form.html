@@ -183,9 +183,11 @@
       <pre id="preview"></pre>
       <div class="filename">Will download as <code><span id="filenamePreview">untitled.md</span></code></div>
       <div class="actions">
-        <button id="downloadBtn" type="button">Download .md</button>
+        <button id="githubBtn" type="button">Create on GitHub</button>
+        <button id="downloadBtn" type="button" class="secondary">Download .md</button>
         <button id="copyBtn" type="button" class="secondary">Copy to clipboard</button>
       </div>
+      <div class="hint" style="margin-top:8px;">"Create on GitHub" opens GitHub's new-file page pre-filled with this content — review and click GitHub's own "Commit new file" button. Requires being logged into GitHub already; no download or git needed.</div>
       <div class="status" id="status"></div>
     </div>
   </div>
@@ -388,12 +390,35 @@ function renderPreview(){
   document.getElementById('filenamePreview').textContent = slug + '.md';
 
   const ready = title.length > 0 && ingredientLines.length > 0 && stepLines.length > 0;
+  document.getElementById('githubBtn').disabled = !ready;
   document.getElementById('downloadBtn').disabled = !ready;
   document.getElementById('copyBtn').disabled = !ready;
 }
 
 document.getElementById('title').addEventListener('input', renderPreview);
 ['time','serves','blurb'].forEach(id => document.getElementById(id).addEventListener('input', renderPreview));
+
+// ---------- create on GitHub ----------
+const GITHUB_OWNER = 'rseldner';
+const GITHUB_REPO = 'calor-color-y-sabor';
+const GITHUB_BRANCH = 'main';
+
+document.getElementById('githubBtn').addEventListener('click', () => {
+  const { text, slug } = buildContent();
+  const path = `recipes/${slug}.md`;
+  const message = `Add recipe: ${slug}`;
+  const url = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/new/${GITHUB_BRANCH}`
+    + `?filename=${encodeURIComponent(path)}`
+    + `&value=${encodeURIComponent(text)}`
+    + `&message=${encodeURIComponent(message)}`;
+
+  if (url.length > 7500){
+    showStatus('Recipe is long — GitHub\'s prefill may truncate it. Use Download instead.', 'err');
+    return;
+  }
+  window.open(url, '_blank', 'noopener');
+  showStatus('Opened on GitHub — review and click "Commit new file" there.', 'ok');
+});
 
 document.getElementById('downloadBtn').addEventListener('click', () => {
   const { text, slug } = buildContent();
