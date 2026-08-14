@@ -9,7 +9,7 @@ tags: [vegano, tacos, mexicano, sin-carne]
 related: [salsa-de-pina, jicama-slaw]
 ingredients: |
   **Champiñones:**
-  1 lb (450g) de mezcla de champiñones (tipo steak blend), troceados o rebanados
+  1/2 lb (250g) de mezcla de champiñones (tipo steak blend), troceados o rebanados
   1 cucharada de aceite
   **Adobo (Marinada):**
   4 cucharadas de jugo de piña
