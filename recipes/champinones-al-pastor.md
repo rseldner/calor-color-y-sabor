@@ -17,7 +17,7 @@ ingredients: |
   **Champiñones:**
   1/2 lb (250g) de mezcla de champiñones (tipo steak blend), troceados o rebanados
   1 cucharada de aceite
-  1 lata de piña picada en su jugo (reserve 4 cucharadas del jugo y aproximadamente 1/4 de la piña; use más piña al gusto)
+  1 lata de piña picada en su jugo (reserve 4 a 6 cucharadas del jugo y aproximadamente 1/4 de la piña; use más piña al gusto)
 
   **Adobo (Marinada):**
   4 - 6 cucharadas del jugo de la piña enlatada
