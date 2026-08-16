@@ -1,0 +1,44 @@
+---
+layout: recipe.njk
+title: Pastel de Elote Vegano
+category: guarniciones
+time: 55 min
+serves: 4-6
+blurb: Pastel de elote suave y cremoso, inspirado en el de Café Poca Cosa de Tucson, con el dulzor del elote y el sabor de la masa para lograr una textura parecida a un tamal muy cremoso.
+tags: [mexicano, vegano, elote, masa]
+ingredients: |
+  2 tazas de granos de elote dulce, frescos o congelados y descongelados
+  1/3 taza de Maseca (harina de maíz nixtamalizado)
+  1/2 taza de crema de nuez de la India sin azúcar
+  1/3 taza de leche de soya sin azúcar, más si es necesario
+  2 cucharadas de mantequilla vegana, derretida
+  2 cucharadas de azúcar
+  1 cucharada de fécula de maíz
+  1/2 cucharadita de polvo para hornear
+  1/2 cucharadita de sal
+permalink: "recipes/{{ title | slug }}/"
+---
+1. Precalienta el horno a **175°C (350°F)**. Engrasa ligeramente un molde para hornear de aproximadamente 20 cm (8 pulgadas).
+
+2. Agrega a la licuadora el elote, la crema de nuez de la India, la leche de soya, la mantequilla vegana derretida y el azúcar. Licúa hasta obtener una mezcla **muy tersa y cremosa**. La idea es lograr un puré de elote, no una mezcla con trozos.
+
+3. Agrega la Maseca, la fécula de maíz, el polvo para hornear y la sal. Licúa brevemente, solo hasta integrar todo.
+
+4. Revisa la consistencia. La mezcla debe parecerse a una **masa espesa para hot cakes o una crema espesa**, no a una masa para tamales. Si está tan espesa que mantiene su forma, agrega más leche de soya, 1 cucharada a la vez, hasta obtener la consistencia adecuada.
+
+5. Prueba un poco de la mezcla y ajusta el dulzor si es necesario. Debe tener un sabor claramente dulce y a elote, pero sin llegar a parecer un postre. Si los elotes no están muy dulces, agrega entre 1/2 y 1 cucharada adicional de azúcar.
+
+6. Vierte la mezcla en el molde preparado y alisa la superficie.
+
+7. Hornea durante **30-40 minutos**, hasta que las orillas estén firmes pero el centro todavía esté suave y se mueva ligeramente al agitar el molde. No lo hornees hasta que quede completamente firme o seco.
+
+8. Retira del horno y deja reposar durante **10-15 minutos**. El pastel seguirá tomando consistencia mientras reposa, pero debe conservar un interior suave y cremoso.
+
+### Consejos del Chef
+
+- **La textura es lo más importante:** No debe tener la textura de un pan de elote ni quedar tan firme como un tamal tradicional. Debe mantener su forma al servirlo, pero quedar muy suave, húmedo y casi como una crema cuajada por dentro.
+- **Licúa muy bien el elote:** Licuar todos los granos ayuda a conseguir esa textura particularmente cremosa y evita que los granos enteros interrumpan la consistencia.
+- **No te excedas con la Maseca:** La masa aporta el sabor característico de un tamal y suficiente estructura para mantener unido el pastel. Demasiada Maseca hará que quede denso.
+- **Fíjate en la cocción, no solo en el tiempo:** Sácalo cuando el centro todavía se mueva ligeramente. Hornearlo de más es la manera más fácil de perder la textura cremosa.
+- **Ajusta según el elote:** El dulzor puede variar bastante entre elote fresco y congelado. Prueba la mezcla licuada antes de decidir si necesita más azúcar.
+- **Sírvelo con salsa:** La base dulce y cremosa de elote combina especialmente bien con una salsa de chile asado, poblano, cilantro o alguna salsa cremosa de chile.
